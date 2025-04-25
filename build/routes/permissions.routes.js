@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.permissionRoutes = void 0;
+const express_1 = require("express");
+const permissions_controller_1 = require("../controllers/roles/permissions.controller");
+const isauthenticated_guard_1 = require("../guards/isauthenticated.guard");
+const router = (0, express_1.Router)();
+router.use(isauthenticated_guard_1.isauthenticated);
+router.get('/', permissions_controller_1.getPermissionsHandler);
+router.get('/me', permissions_controller_1.getLoggedUserPermissionHandler);
+exports.permissionRoutes = router;
