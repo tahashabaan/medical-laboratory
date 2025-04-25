@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 30
+    },
+    "auditLog": "D:\\taha\\graduation_project\\logs\\.d324f7f0e862fe47d79e6666dbd4a8c968fe76dd-audit.json",
+    "files": [
+        {
+            "date": 1745584926461,
+            "name": "D:\\taha\\graduation_project\\logs\\logfile-2025-04-25.log",
+            "hash": "3b38b866891635b86aea6825d8678dc85ab68f44ac14c3dbebde4d5a1afef67f"
+        }
+    ],
+    "hashType": "sha256"
+}
