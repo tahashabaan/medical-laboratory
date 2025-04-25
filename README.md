@@ -1,4 +1,4 @@
-# Kadinle API v2
+# Medical API v2
 
 Kadinle API v2 is a scalable and modular backend API built with **TypeScript**, **Express**, and **TypeORM**. It provides robust features for managing roles, permissions, authentication, and more. This project is designed to be production-ready and follows best practices for modern backend development.
 
