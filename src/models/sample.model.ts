@@ -7,12 +7,12 @@ import{
     ManyToOne,
     OneToMany,
     JoinColumn,
+    OneToOne,
 
 } from 'typeorm';
 
 import { MODEL_NAMES } from '../constants/model-names';
-import e from 'cors';
-import { LapEntity } from './lab.model';
+import { LapEntity as Lap } from './lab.model';
 
 @Entity({ name: MODEL_NAMES.sample })
 export class SampleEntity {
@@ -23,7 +23,7 @@ export class SampleEntity {
     @Column({ type: 'varchar', nullable: false })
     user_name!: string;
 
-    @Column({ type: 'varchar', nullable: false })
+    @Column({ type: 'varchar', nullable: false, default:0 })
     result!: string;
 
     @Column({ type: 'varchar', nullable: true, unique: true })
@@ -44,15 +44,26 @@ export class SampleEntity {
     @UpdateDateColumn({ name: 'updated_at', type: 'timestamptz', default: () => 'now()' })
     updatedAt?: Date;
 
-    @Column({ type: 'varchar', nullable: false, unique: true })
-    @ManyToOne(() => LapEntity, lap => lap.samples, { cascade: true, nullable: true })
+  
+    @OneToMany(
+        () => SampleMediaEntity, 
+         media => media.sample, 
+        { eager: true, cascade: true }
+    )
+    sampleMedia!: SampleMediaEntity[];
+
+    @ManyToOne(() => Lap, lap => lap.samples, { cascade: true, nullable: false, eager: true})
     @JoinColumn({ name: 'lap_id' })
-    lap!: LapEntity;
+    lap!: Lap;
+
+    @OneToOne(
+        () => SampleNotificationEntity,
+        notification => notification.sample,
+        { cascade: true, eager: true }
+      )
+     notification?: SampleNotificationEntity;
 
 
-// sample =>one to many relation with sample media
-    // relation with sample 
-    
 }
 
 // upload media for sample
@@ -63,7 +74,11 @@ export class SampleMediaEntity {
 
     @Column({ type: 'varchar', nullable: false })
     // sample_id!: string;
-    @ManyToOne(() => SampleEntity, sample => sample.sample_id, { cascade: true, nullable: false })
+    @ManyToOne(
+        () => SampleEntity, 
+        sample => sample.sampleMedia,
+         { cascade: true, nullable: false, eager: true }
+    )
     @JoinColumn({ name: 'sample_id' })
     sample!: SampleEntity;
     
@@ -87,32 +102,6 @@ export class SampleMediaEntity {
 }
 
 
-// return sample result for sample
-// @Entity({name: MODEL_NAMES.sample_result})
-// export class SampleResultEntity {
-//     @PrimaryGeneratedColumn('uuid')
-//     sample_result_id!: string;
-
-
-//     @Column({ type: 'varchar', nullable: false })
-//     sample_id!: string;
-
-
-//     @Column({ type: 'varchar', nullable: false })
-//     result_name!: string;
-
-
-//     @Column({ type: 'text', nullable: true })
-//     result_description?: string;
-
-
-//     @CreateDateColumn({ name: 'created_at', type: 'timestamptz', default: () => 'now()' })
-//     createdAt?: Date;
-
-
-//     @UpdateDateColumn({ name: 'updated_at', type: 'timestamptz', default: () => 'now()' })
-//     updatedAt?: Date;
-// }
 
 
 // send notification to user for sample result
@@ -132,6 +121,15 @@ export class SampleNotificationEntity {
     @Column({ type: 'text', nullable: true })
     notification_description?: string;
 
+    @OneToOne(
+        () => SampleEntity,
+        sample => sample.notification,
+        { nullable: false, eager: true, cascade: true }
+      )
+      @JoinColumn({ name: 'sample_id' })
+      sample!: SampleEntity;
+    
+
 
     @CreateDateColumn({ name: 'created_at', type: 'timestamptz', default: () => 'now()' })
     createdAt?: Date;
@@ -141,3 +139,29 @@ export class SampleNotificationEntity {
     updatedAt?: Date;
 }
 
+    // return sample result for sample
+    // @Entity({name: MODEL_NAMES.sample_result})
+    // export class SampleResultEntity {
+    //     @PrimaryGeneratedColumn('uuid')
+    //     sample_result_id!: string;
+    
+    
+    //     @Column({ type: 'varchar', nullable: false })
+    //     sample_id!: string;
+    
+    
+    //     @Column({ type: 'varchar', nullable: false })
+    //     result_name!: string;
+    
+    
+    //     @Column({ type: 'text', nullable: true })
+    //     result_description?: string;
+    
+    
+    //     @CreateDateColumn({ name: 'created_at', type: 'timestamptz', default: () => 'now()' })
+    //     createdAt?: Date;
+    
+    
+    //     @UpdateDateColumn({ name: 'updated_at', type: 'timestamptz', default: () => 'now()' })
+    //     updatedAt?: Date;
+    // }

@@ -1,90 +1,82 @@
+// lap.entity.ts
 import {
+  Entity,
+  PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
-  PrimaryGeneratedColumn,
-  JoinColumn,
+  UpdateDateColumn,
   ManyToOne,
-  OneToOne,
   OneToMany,
-  Entity,
-}  from 'typeorm';
-
-
-import { SampleEntity } from './sample.model'; // Import the SampleEntity
-// names of models in the system 
+  JoinColumn,
+} from 'typeorm';
 import { MODEL_NAMES } from '../constants/model-names';
-import { VerifyReason } from '../constants/verify-reason';
-import { create } from 'domain';
-
+import { SampleEntity } from './sample.model';
 
 @Entity({ name: MODEL_NAMES.lap })
 export class LapEntity {
-    @PrimaryGeneratedColumn('uuid')
-    lab_id!: string;
+  @PrimaryGeneratedColumn('uuid')
+  lap_id!: string;                        // renamed for consistency
 
-    @Column({type: 'varchar', nullable: false, unique: true})
-    email!: string;
+  @Column({ type: 'varchar', nullable: false, unique: true })
+  email!: string;
 
-    @Column({ type: 'varchar', nullable: false, select: false })
-    password!: string;
+  @Column({ type: 'varchar', nullable: false, select: false })
+  password!: string;
 
+  @Column({ type: 'varchar', nullable: true })
+  phone?: string;
 
-    @Column({ type: 'varchar', nullable: true })
-    phone?: string;
+  @Column({ type: 'varchar', nullable: true })
+  address?: string;
 
+  @CreateDateColumn({ name: 'created_at', type: 'timestamptz', default: () => 'now()' })
+  createdAt?: Date;
 
-    @Column({ type: 'varchar', nullable: true })
-    address?: string;
+  @UpdateDateColumn({ name: 'updated_at', type: 'timestamptz', default: () => 'now()' })
+  updatedAt?: Date;                       // ✅ fixed
 
-    @CreateDateColumn({ name: 'created_at', type: 'timestamptz', default: () => 'now()' })
-    createdAt?: Date;
+  @ManyToOne(
+    () => SubscriptionEntity,
+    subscription => subscription.laps,
+    { nullable: true, eager: true }
+  )
+  @JoinColumn({ name: 'subscription_id' }) // explicitly define the FK column
+  subscription?: SubscriptionEntity;
 
-    @CreateDateColumn({ name: 'updated_at', type: 'timestamptz', default: () => 'now()' })
-    updatedAt?: Date;
-
-    @OneToMany(() => SampleEntity, sample => sample.lap, { cascade: true })
-    samples?: SampleEntity[];  // Changed type from string[] to SampleEntity[]
-
-
-    @ManyToOne(() => SubscriptionEntity, subscription => subscription.laps, { cascade: true, nullable: true })
-    @JoinColumn({ name: 'subscription_id' })
-    
-    subscription?: SubscriptionEntity;
+  @OneToMany(
+    () => SampleEntity,
+    sample => sample.lap,
+    { cascade: true }
+  )
+  samples?: SampleEntity[];
 }
 
 
+// subscription.entity.ts';
 @Entity({ name: MODEL_NAMES.subscription })
 export class SubscriptionEntity {
-    @PrimaryGeneratedColumn('uuid')
-    subscription_id!: string;
+  @PrimaryGeneratedColumn('uuid')
+  subscription_id!: string;
 
-    
-    
-    @Column({ type: 'varchar', nullable: false })
-    subscription_name!: string;
-    
-    @Column({ type: 'varchar', nullable: true })
-    subscription_price?: string;
-    
-    @Column({ type: 'varchar', nullable: true })
-    subscription_duration?: string;
-    
-    @CreateDateColumn({ name: 'created_at', type: 'timestamptz', default: () => 'now()' })
-    createdAt?: Date;
-    
-    @CreateDateColumn({ name: 'updated_at', type: 'timestamptz', default: () => 'now()' })
-    updatedAt?: Date;
+  @Column({ type: 'varchar', nullable: false })
+  subscription_name!: string;
 
-    @Column({ type: 'varchar', nullable: true })
-    
-    @OneToMany(() => LapEntity, lap => lap.lab_id, { cascade: true })
-    laps?: string[];
+  @Column({ type: 'varchar', nullable: true })
+  subscription_price?: string;
 
-    // @JoinColumn({ name: 'lab_id' })
-    // lapsRelation?: LapEntity[];
+  @Column({ type: 'varchar', nullable: true })
+  subscription_duration?: string;
 
-    // @Column({ type: 'varchar', nullable: true })
-    // additionalField?: string;
+  @CreateDateColumn({ name: 'created_at', type: 'timestamptz', default: () => 'now()' })
+  createdAt?: Date;
+
+  @UpdateDateColumn({ name: 'updated_at', type: 'timestamptz', default: () => 'now()' })
+  updatedAt?: Date;                       // updated decorator here too
+
+  @OneToMany(
+    () => LapEntity,
+    lap => lap.subscription,
+    { cascade: true }
+  )
+  laps?: LapEntity[];
 }
-
- 
