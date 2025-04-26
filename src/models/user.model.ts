@@ -1,19 +1,22 @@
 import {
   Column,
   CreateDateColumn,
+  PrimaryGeneratedColumn,
   Entity,
   JoinColumn,
   ManyToOne,
   OneToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+  OneToMany
+}  from 'typeorm';
+
 import { MODEL_NAMES } from '../constants/model-names';
-import { OneToMany } from 'typeorm';
+// import { OneToMany } from 'typeorm';
 // import { PointHistoryEntity } from './point.model';
 import { RoleEntity } from './role.model';
 // import { CountryEntity } from './country.model';
 import { VerifyReason } from '../constants/verify-reason';
 
+// create table with name profile
 @Entity({ name: MODEL_NAMES.profile })
 export class ProfileEntity {
   @PrimaryGeneratedColumn('uuid')
