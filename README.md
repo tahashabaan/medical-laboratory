@@ -6,7 +6,7 @@ A comprehensive laboratory management system built with TypeScript, Express, and
 
 - [Features](#features)
 - [Tech Stack](#tech-stack)
-- [Project Structure](#project-structure)
+- [Project Structure](#Detailed-Project-Structure)
 - [Installation](#installation)
 - [Environment Variables](#environment-variables)
 - [Scripts](#scripts)
