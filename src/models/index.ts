@@ -1,8 +1,10 @@
 import { dataSource } from '../config/typeorm';
 import { UserEntity, ProfileEntity } from './user.model';
 import { PermissionEntity, RoleEntity, RolePermissionEntity } from './role.model';
-import {LapEntity, SubscriptionEntity} from './lab.model';
-import { SampleEntity, SampleMediaEntity, SampleNotificationEntity } from './sample.model';
+import {LapEntity} from './lab.model';
+import { SubscriptionEntity } from './subscription.model';
+import { SampleEntity, SampleMediaEntity } from './sample.model';
+import { SampleNotificationEntity } from './notification.model';
 
 //  create table with lap name and subscription name
 const Lap = dataSource.getRepository(LapEntity);

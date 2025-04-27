@@ -9,8 +9,10 @@ import {
   OneToMany,
   JoinColumn,
 } from 'typeorm';
+
 import { MODEL_NAMES } from '../constants/model-names';
-import { SampleEntity } from './sample.model';
+import {SampleEntity as  Sample } from './sample.model';
+import {SubscriptionEntity as  Subscription } from './subscription.model';
 
 @Entity({ name: MODEL_NAMES.lap })
 export class LapEntity {
@@ -36,47 +38,18 @@ export class LapEntity {
   updatedAt?: Date;                       // ✅ fixed
 
   @ManyToOne(
-    () => SubscriptionEntity,
+    () => Subscription,
     subscription => subscription.laps,
     { nullable: true, eager: true }
   )
   @JoinColumn({ name: 'subscription_id' }) // explicitly define the FK column
-  subscription?: SubscriptionEntity;
+  subscription?: Subscription;
 
   @OneToMany(
-    () => SampleEntity,
+    () => Sample,
     sample => sample.lap,
     { cascade: true }
   )
-  samples?: SampleEntity[];
+  samples?: Sample[];
 }
 
-
-// subscription.entity.ts';
-@Entity({ name: MODEL_NAMES.subscription })
-export class SubscriptionEntity {
-  @PrimaryGeneratedColumn('uuid')
-  subscription_id!: string;
-
-  @Column({ type: 'varchar', nullable: false })
-  subscription_name!: string;
-
-  @Column({ type: 'varchar', nullable: true })
-  subscription_price?: string;
-
-  @Column({ type: 'varchar', nullable: true })
-  subscription_duration?: string;
-
-  @CreateDateColumn({ name: 'created_at', type: 'timestamptz', default: () => 'now()' })
-  createdAt?: Date;
-
-  @UpdateDateColumn({ name: 'updated_at', type: 'timestamptz', default: () => 'now()' })
-  updatedAt?: Date;                       // updated decorator here too
-
-  @OneToMany(
-    () => LapEntity,
-    lap => lap.subscription,
-    { cascade: true }
-  )
-  laps?: LapEntity[];
-}

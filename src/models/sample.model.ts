@@ -13,6 +13,8 @@ import{
 
 import { MODEL_NAMES } from '../constants/model-names';
 import { LapEntity as Lap } from './lab.model';
+import {SampleNotificationEntity as Notification } from './notification.model';
+
 
 @Entity({ name: MODEL_NAMES.sample })
 export class SampleEntity {
@@ -23,7 +25,7 @@ export class SampleEntity {
     @Column({ type: 'varchar', nullable: false })
     user_name!: string;
 
-    @Column({ type: 'varchar', nullable: false, default:0 })
+    @Column({ type: 'varchar', nullable: false, default: 0 })
     result!: string;
 
     @Column({ type: 'varchar', nullable: true, unique: true })
@@ -57,14 +59,16 @@ export class SampleEntity {
     lap!: Lap;
 
     @OneToOne(
-        () => SampleNotificationEntity,
+        () => Notification,
         notification => notification.sample,
         { cascade: true, eager: true }
       )
-     notification?: SampleNotificationEntity;
+     notification?: Notification;
 
 
 }
+
+
 
 // upload media for sample
 @Entity({name: MODEL_NAMES.sample_media})
@@ -104,40 +108,7 @@ export class SampleMediaEntity {
 
 
 
-// send notification to user for sample result
-@Entity({name: MODEL_NAMES.sample_notification})
-export class SampleNotificationEntity {
-    @PrimaryGeneratedColumn('uuid')
-    sample_notification_id!: string;
 
-    @Column({ type: 'varchar', nullable: false })
-    sample_id!: string;
-
-
-    @Column({ type: 'varchar', nullable: false })
-    notification_name!: string;
-
-
-    @Column({ type: 'text', nullable: true })
-    notification_description?: string;
-
-    @OneToOne(
-        () => SampleEntity,
-        sample => sample.notification,
-        { nullable: false, eager: true, cascade: true }
-      )
-      @JoinColumn({ name: 'sample_id' })
-      sample!: SampleEntity;
-    
-
-
-    @CreateDateColumn({ name: 'created_at', type: 'timestamptz', default: () => 'now()' })
-    createdAt?: Date;
-
-
-    @UpdateDateColumn({ name: 'updated_at', type: 'timestamptz', default: () => 'now()' })
-    updatedAt?: Date;
-}
 
     // return sample result for sample
     // @Entity({name: MODEL_NAMES.sample_result})

@@ -3,8 +3,8 @@
 
 import { app } from './app';
 import { env } from './config/env';
-// import { initializeDB } from './config/typeorm';
-
+import { initializeDB } from './config/typeorm';
+// 
 const start = async () => {
   // await initializeDB();
   app.listen(env.port, () => {

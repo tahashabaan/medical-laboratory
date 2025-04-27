@@ -18,10 +18,10 @@ export enum MODEL_NAMES {
   sample_media = 'sample_media',
   sample_media_item = 'sample_media_item',
   sample_notification = 'sample_notification',
+  role_permission = 'role_permission',
   // product = 'product',
   // chat_room = 'chat_room',
   // translation = 'translation',
   // chat_message = 'chat_message',
   // product_like = 'product_like',
-  // role_permission = 'role_permission',
 }

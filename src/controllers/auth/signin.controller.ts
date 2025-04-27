@@ -20,7 +20,9 @@ export const signinHandler: RequestHandler<
   }
 > = async (req, res, next) => {
   const userRepo = Models.User;
+
   const user = await userRepo.findOne({ where: { email: req.body.email }, loadRelationIds: true });
+  
   if (!user) return next(new Errors.BadRequest(ErrCodes.INVALID_CREDINTIALS, req.lang));
 
   const isPwdMatch = await Bcrypt.comparePwd(req.body.password, user.password, env.bcrypt.paper);

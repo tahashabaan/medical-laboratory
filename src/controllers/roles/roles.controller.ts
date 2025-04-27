@@ -83,3 +83,4 @@ export const removeRoleHandler: RequestHandler<
   await Models.Role.delete({ id: req.params.roleId });
   res.status(200).json({ success: true, message: 'role deleted successfully', data: null });
 };
+

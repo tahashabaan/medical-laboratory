@@ -1,6 +1,8 @@
 import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
 import { MODEL_NAMES } from '../constants/model-names';
 
+
+
 @Entity({ name: MODEL_NAMES.role })
 export class RoleEntity {
   @PrimaryGeneratedColumn('uuid')
