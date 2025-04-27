@@ -12,9 +12,9 @@ const Subscription = dataSource.getRepository(SubscriptionEntity);
 
 
 // create table with sample and sampleMedia
-const sample = dataSource.getRepository(SampleEntity);
-const sampleMedia = dataSource.getRepository(SampleMediaEntity);
-const sampleNotification = dataSource.getRepository(SampleNotificationEntity);
+const Sample = dataSource.getRepository(SampleEntity);
+const SampleMedia = dataSource.getRepository(SampleMediaEntity);
+const SampleNotification = dataSource.getRepository(SampleNotificationEntity);
 
 const User = dataSource.getRepository(UserEntity);
 const Profile = dataSource.getRepository(ProfileEntity);
@@ -26,9 +26,9 @@ const RolePermission = dataSource.getRepository(RolePermissionEntity);
 export const Models = {
   Lap,
   Subscription,
-  sample,
-  sampleMedia,
-  sampleNotification,
+  Sample,
+  SampleMedia,
+  SampleNotification,
   User,
   Role,
   Profile,

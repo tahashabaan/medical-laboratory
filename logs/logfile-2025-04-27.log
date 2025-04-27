@@ -1,0 +1,54 @@
+2025-04-27T07:38:22.525Z [ERROR]: Error during Data Source initialization: getaddrinfo ENOTFOUND db
+Error: getaddrinfo ENOTFOUND db
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26)
+2025-04-27T07:48:37.233Z [ERROR]: Error during Data Source initialization: connection is insecure (try using `sslmode=require`)
+error: connection is insecure (try using `sslmode=require`)
+    at Parser.parseErrorMessage (D:\taha\graduation_project\node_modules\pg-protocol\src\parser.ts:369:69)
+    at Parser.handlePacket (D:\taha\graduation_project\node_modules\pg-protocol\src\parser.ts:187:21)
+    at Parser.parse (D:\taha\graduation_project\node_modules\pg-protocol\src\parser.ts:102:30)
+    at Socket.<anonymous> (D:\taha\graduation_project\node_modules\pg-protocol\src\index.ts:7:48)
+    at Socket.emit (node:events:524:28)
+    at addChunk (node:internal/streams/readable:561:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+    at Socket.Readable.push (node:internal/streams/readable:392:5)
+    at TCP.onStreamRead (node:internal/stream_base_commons:191:23)
+2025-04-27T07:50:26.580Z [ERROR]: Error during Data Source initialization: Relation SampleNotificationEntity#sample and SampleEntity#notification both has cascade remove set. This may lead to unexpected circular removals. Please set cascade remove only from one side of relationship.
+TypeORMError: Relation SampleNotificationEntity#sample and SampleEntity#notification both has cascade remove set. This may lead to unexpected circular removals. Please set cascade remove only from one side of relationship.
+    at D:\taha\graduation_project\src\metadata-builder\EntityMetadataValidator.ts:310:23
+    at Array.forEach (<anonymous>)
+    at EntityMetadataValidator.validate (D:\taha\graduation_project\src\metadata-builder\EntityMetadataValidator.ts:304:34)
+    at D:\taha\graduation_project\src\metadata-builder\EntityMetadataValidator.ts:43:18
+    at Array.forEach (<anonymous>)
+    at EntityMetadataValidator.validateMany (D:\taha\graduation_project\src\metadata-builder\EntityMetadataValidator.ts:42:25)
+    at DataSource.buildMetadatas (D:\taha\graduation_project\src\data-source\DataSource.ts:732:33)
+    at DataSource.initialize (D:\taha\graduation_project\src\data-source\DataSource.ts:263:13)
+2025-04-27T07:52:44.343Z [ERROR]: Error during Data Source initialization: Relation SampleEntity#sampleMedia and SampleMediaEntity#sample both has cascade remove set. This may lead to unexpected circular removals. Please set cascade remove only from one side of relationship.
+TypeORMError: Relation SampleEntity#sampleMedia and SampleMediaEntity#sample both has cascade remove set. This may lead to unexpected circular removals. Please set cascade remove only from one side of relationship.
+    at D:\taha\graduation_project\src\metadata-builder\EntityMetadataValidator.ts:310:23
+    at Array.forEach (<anonymous>)
+    at EntityMetadataValidator.validate (D:\taha\graduation_project\src\metadata-builder\EntityMetadataValidator.ts:304:34)
+    at D:\taha\graduation_project\src\metadata-builder\EntityMetadataValidator.ts:43:18
+    at Array.forEach (<anonymous>)
+    at EntityMetadataValidator.validateMany (D:\taha\graduation_project\src\metadata-builder\EntityMetadataValidator.ts:42:25)
+    at DataSource.buildMetadatas (D:\taha\graduation_project\src\data-source\DataSource.ts:732:33)
+    at DataSource.initialize (D:\taha\graduation_project\src\data-source\DataSource.ts:263:13)
+2025-04-27T07:54:07.326Z [ERROR]: Error during Data Source initialization: Relation SampleEntity#lap and LapEntity#samples both has cascade remove set. This may lead to unexpected circular removals. Please set cascade remove only from one side of relationship.
+TypeORMError: Relation SampleEntity#lap and LapEntity#samples both has cascade remove set. This may lead to unexpected circular removals. Please set cascade remove only from one side of relationship.
+    at D:\taha\graduation_project\src\metadata-builder\EntityMetadataValidator.ts:310:23
+    at Array.forEach (<anonymous>)
+    at EntityMetadataValidator.validate (D:\taha\graduation_project\src\metadata-builder\EntityMetadataValidator.ts:304:34)
+    at D:\taha\graduation_project\src\metadata-builder\EntityMetadataValidator.ts:43:18
+    at Array.forEach (<anonymous>)
+    at EntityMetadataValidator.validateMany (D:\taha\graduation_project\src\metadata-builder\EntityMetadataValidator.ts:42:25)
+    at DataSource.buildMetadatas (D:\taha\graduation_project\src\data-source\DataSource.ts:732:33)
+    at DataSource.initialize (D:\taha\graduation_project\src\data-source\DataSource.ts:263:13)
+2025-04-27T07:55:01.943Z [ERROR]: Error during Data Source initialization: Circular eager relations are disallowed. SampleNotificationEntity#sample contains "eager: true", and its inverse side SampleEntity#notification contains "eager: true" as well. Remove "eager: true" from one side of the relation.
+TypeORMError: Circular eager relations are disallowed. SampleNotificationEntity#sample contains "eager: true", and its inverse side SampleEntity#notification contains "eager: true" as well. Remove "eager: true" from one side of the relation.
+    at D:\taha\graduation_project\src\metadata-builder\EntityMetadataValidator.ts:360:27
+    at Array.forEach (<anonymous>)
+    at D:\taha\graduation_project\src\metadata-builder\EntityMetadataValidator.ts:355:43
+    at Array.forEach (<anonymous>)
+    at EntityMetadataValidator.validateEagerRelations (D:\taha\graduation_project\src\metadata-builder\EntityMetadataValidator.ts:354:25)
+    at EntityMetadataValidator.validateMany (D:\taha\graduation_project\src\metadata-builder\EntityMetadataValidator.ts:46:14)
+    at DataSource.buildMetadatas (D:\taha\graduation_project\src\data-source\DataSource.ts:732:33)
+    at DataSource.initialize (D:\taha\graduation_project\src\data-source\DataSource.ts:263:13)

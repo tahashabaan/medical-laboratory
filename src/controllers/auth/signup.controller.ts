@@ -40,7 +40,8 @@ export const signupHandler: RequestHandler<
       isCreatedBySystem: true,
     },
   });
-  if (!targetRole) return next(new Errors.NotFound(ErrCodes.ROLE_NOT_FOUND, req.lang));
+  if (!targetRole) 
+    return next(new Errors.NotFound(ErrCodes.ROLE_NOT_FOUND, req.lang));
 
   const user = await Models.User.save({
     id: userId,

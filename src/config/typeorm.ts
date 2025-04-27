@@ -12,8 +12,14 @@ export const dataSource = new DataSource({
   database: env.postgres.database,
   entities: [__dirname + '/../models/**/*.model.*'],
   synchronize: true,
+  migrationsRun: false,
   logging: false,
+  ssl: {
+    rejectUnauthorized: false,
+    // require: true
+  },
 });
+
 
 export const initializeDB = async () => {
   try {

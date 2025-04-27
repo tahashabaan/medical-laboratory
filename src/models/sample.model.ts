@@ -50,18 +50,18 @@ export class SampleEntity {
     @OneToMany(
         () => SampleMediaEntity, 
          media => media.sample, 
-        { eager: true, cascade: true }
+        { }
     )
     sampleMedia!: SampleMediaEntity[];
 
-    @ManyToOne(() => Lap, lap => lap.samples, { cascade: true, nullable: false, eager: true})
+    @ManyToOne(() => Lap, lap => lap.samples, {nullable: false, })
     @JoinColumn({ name: 'lap_id' })
     lap!: Lap;
 
     @OneToOne(
         () => Notification,
         notification => notification.sample,
-        { cascade: true, eager: true }
+        {  }
       )
      notification?: Notification;
 
@@ -81,7 +81,7 @@ export class SampleMediaEntity {
     @ManyToOne(
         () => SampleEntity, 
         sample => sample.sampleMedia,
-         { cascade: true, nullable: false, eager: true }
+        {nullable: false }
     )
     @JoinColumn({ name: 'sample_id' })
     sample!: SampleEntity;
