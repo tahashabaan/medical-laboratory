@@ -2,29 +2,29 @@ import { Router } from 'express';
 import { authRoutes } from './auth.routes';
 import { roleRoutes } from './roles.routes';
 import { permissionRoutes } from './permissions.routes';
+import { labRoutes } from './labs.routes';
+import { subscriptionRoutes } from './subscriptions.routes';
+import { sampleRoutes } from './samples.routes';
+import { notificationRoutes } from './notifications.routes';
 
 const router = Router();
 
 router.use('/auth', authRoutes);
 router.use('/roles', roleRoutes);
-router.use('/permissions', permissionRoutes);   
+router.use('/permissions', permissionRoutes);
+router.use('/labs', labRoutes);
+router.use('/subscriptions', subscriptionRoutes);
+router.use('/samples', sampleRoutes);
+router.use('/notifications', notificationRoutes);
 
-router.use('/', (req, res, next) => {
-  // console.log('New route handler');
+router.use('/', (req, res) => {
+  res.json({ message: 'This is a basic route' });
+});
 
-  // Add your new route logic 
-    res.json({ message: 'This is a basic route' });
-    // Call next() to pass control to the next middleware or route handler
-    // next();
-}); // Example of a new route handler
 // Example of another new route
-router.use('/another-new-route', (req, res, next) => {
+router.use('/another-new-route', (req, res) => {
   console.log('Another new route handler');
-
-
-
   res.send('This is another new route');
-  next();
 });
 
 export const apiRoutes = router;

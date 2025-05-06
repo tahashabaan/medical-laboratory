@@ -18,6 +18,7 @@ export enum MODEL_NAMES {
   sample_media = 'sample_medias',
   sample_media_item = 'sample_media_items',
   sample_notification = 'sample_notifications',
+  patient = 'patients',
   role_permission = 'role_permissions',
   // product = 'product',
   // chat_room = 'chat_room',

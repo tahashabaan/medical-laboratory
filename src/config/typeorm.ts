@@ -13,20 +13,19 @@ export const dataSource = new DataSource({
   entities: [__dirname + '/../models/**/*.model.*'],
   synchronize: true,
   migrationsRun: false,
-  logging: false,
+  logging: env.nodeEnv === 'development',
   ssl: {
     rejectUnauthorized: false,
     // require: true
   },
 });
 
-
 export const initializeDB = async () => {
   try {
     await dataSource.initialize();
-    console.log('Data Source has been initialized!');
-  } catch (err) {
-    console.error('Error during Data Source initialization:', err);
-    logger.error('Error during Data Source initialization:', err);
+    console.log('Database connection established successfully');
+  } catch (error) {
+    console.error('Error connecting to database:', error);
+    logger.error('Error during Data Source initialization:', error);
   }
 };

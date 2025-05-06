@@ -5,4 +5,5 @@ export enum FOLDERS {
   categories = 'categories',
   articleCategories = 'articleCategories',
   ratings = 'ratings',
+  sample = 'sample', // Make sure this exists
 }

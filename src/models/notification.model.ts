@@ -20,12 +20,7 @@ export class SampleNotificationEntity {
     sample_notification_id!: string;
 
     @Column({ type: 'varchar', nullable: false })
-    sample_id!: string;
-
-
-    @Column({ type: 'varchar', nullable: false })
     notification_name!: string;
-
 
     @Column({ type: 'text', nullable: true })
     notification_description?: string;
@@ -33,16 +28,13 @@ export class SampleNotificationEntity {
     @OneToOne(
         () => Sample,
         sample => sample.notification,
-        { nullable: false, eager: true, cascade: true }
-      )
-      @JoinColumn({ name: 'sample_id' })
-      sample!: Sample;
-    
-
+        { nullable: false, eager: true, cascade: true, onDelete: 'CASCADE', onUpdate: 'CASCADE' }
+    )
+    @JoinColumn({ name: 'sample_id' })
+    sample!: Sample;
 
     @CreateDateColumn({ name: 'created_at', type: 'timestamptz', default: () => 'now()' })
     createdAt?: Date;
-
 
     @UpdateDateColumn({ name: 'updated_at', type: 'timestamptz', default: () => 'now()' })
     updatedAt?: Date;

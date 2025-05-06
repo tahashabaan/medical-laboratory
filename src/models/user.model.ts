@@ -6,8 +6,9 @@ import {
   JoinColumn,
   ManyToOne,
   OneToOne,
-  OneToMany
-}  from 'typeorm';
+  OneToMany,
+  UpdateDateColumn
+} from 'typeorm';
 
 import { MODEL_NAMES } from '../constants/model-names';
 // import { OneToMany } from 'typeorm';
@@ -49,7 +50,7 @@ export class ProfileEntity {
   @CreateDateColumn({ name: 'created_at', type: 'timestamptz', default: () => 'now()' })
   createdAt?: Date;
 
-  @CreateDateColumn({ name: 'updated_at', type: 'timestamptz', default: () => 'now()' })
+  @UpdateDateColumn({ name: 'updated_at', type: 'timestamptz', default: () => 'now()' })
   updatedAt?: Date;
 }
 
@@ -91,11 +92,11 @@ export class UserEntity {
   @Column({ type: 'varchar', nullable: true })
   fcmToken?: string;
 
-  @ManyToOne(() => RoleEntity, { nullable: false })
+  @ManyToOne(() => RoleEntity, { nullable: false, onDelete: 'RESTRICT', onUpdate: 'CASCADE', eager: true })
   @JoinColumn({ name: 'role_id' })
   role!: RoleEntity;
 
-  @OneToOne(() => ProfileEntity)
+  @OneToOne(() => ProfileEntity, { cascade: true, eager: true })
   @JoinColumn({ name: 'profile_id' })
   profile?: ProfileEntity;
 
@@ -105,7 +106,7 @@ export class UserEntity {
   @CreateDateColumn({ name: 'created_at', type: 'timestamptz', default: () => 'now()' })
   createdAt?: Date;
 
-  @ManyToOne(() => UserEntity, (user) => user.invitations, { nullable: true })
+  @ManyToOne(() => UserEntity, (user) => user.invitations, { nullable: true, onDelete: 'SET NULL' })
   @JoinColumn({ name: 'invited_by' })
   invitedBy?: UserEntity;
 

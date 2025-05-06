@@ -1,4 +1,4 @@
-// lap.entity.ts
+// lab.model.ts
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -6,18 +6,35 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
-  OneToMany,
   JoinColumn,
 } from 'typeorm';
-
 import { MODEL_NAMES } from '../constants/model-names';
-import {SampleEntity as  Sample } from './sample.model';
-import {SubscriptionEntity as  Subscription } from './subscription.model';
+
+@Entity({ name: MODEL_NAMES.subscription })
+export class SubscriptionEntity {
+  @PrimaryGeneratedColumn('uuid')
+  subscription_id!: string;
+
+  @Column({ type: 'varchar', nullable: false })
+  subscription_name!: string;
+
+  @Column({ type: 'varchar', nullable: true })
+  subscription_price?: string;
+
+  @Column({ type: 'varchar', nullable: true })
+  subscription_duration?: string;
+
+  @CreateDateColumn({ name: 'created_at', type: 'timestamptz', default: () => 'now()' })
+  createdAt?: Date;
+
+  @UpdateDateColumn({ name: 'updated_at', type: 'timestamptz', default: () => 'now()' })
+  updatedAt?: Date;
+}
 
 @Entity({ name: MODEL_NAMES.lap })
 export class LapEntity {
   @PrimaryGeneratedColumn('uuid')
-  lap_id!: string;                        // renamed for consistency
+  lap_id!: string;
 
   @Column({ type: 'varchar', nullable: false, unique: true })
   email!: string;
@@ -35,21 +52,13 @@ export class LapEntity {
   createdAt?: Date;
 
   @UpdateDateColumn({ name: 'updated_at', type: 'timestamptz', default: () => 'now()' })
-  updatedAt?: Date;                       // ✅ fixed
+  updatedAt?: Date;
 
   @ManyToOne(
-    () => Subscription,
-    subscription => subscription.laps,
-    { nullable: true, eager: true }
+    () => SubscriptionEntity,
+    { nullable: true, eager: true, onDelete: 'SET NULL', onUpdate: 'CASCADE' }
   )
-  @JoinColumn({ name: 'subscription_id' }) // explicitly define the FK column
-  subscription?: Subscription;
-
-  @OneToMany(
-    () => Sample,
-    sample => sample.lap,
-    { cascade: true }
-  )
-  samples?: Sample[];
+  @JoinColumn({ name: 'subscription_id' })
+  subscription?: SubscriptionEntity;
 }
 

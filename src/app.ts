@@ -11,7 +11,7 @@ import { homeRoutes } from './routes/home.routes';
 import { LanguageCodes } from './constants/languages';
 import { SystemRoles } from './constants/system-roles';
 import { Models } from './models';
-
+import { setupSwagger } from './middlewares/swagger.middleware';
 
 export const app = express();
 
@@ -21,41 +21,8 @@ app.use(cors({ origin: env.frontUrl }));
 app.use(express.urlencoded({ limit: '5mb', extended: true }));
 app.use(express.static('uploads/images'));
 
-// app.route('/api/v1', async (req: express.Request, res: express.Response): Promise<void> => {
-//     res.json({ message: 'API is running' });
-// });
-
-
-// app.use('/', homeRoutes);
-// app.use(Middlewares.LanguageCodes);
-
-// Comment out the authentication middleware
-// app.use(Middlewares.authentication);
-
-// Add a mock authentication middleware that sets a default admin user
-// app.use(async (req, res, next) => {
-//   const adminRole = await Models.Role.findOne({
-//     where: { key: SystemRoles.admin },
-//   });
-  
-//   if (adminRole) {
-//     const permissions = await Models.RolePermission.find({
-//       where: { role: { id: adminRole.id } },
-//       select: ['permission'],
-//       loadRelationIds: true,
-//     });
-    
-//     req.loggedUser = {
-//       id: '00000000-0000-0000-0000-000000000000', // Mock user ID
-//       isGuest: false,
-//       isVerified: true,
-//       roleId: adminRole.id,
-//       permissions: permissions.map((el) => el.permission as unknown as string),
-//       language: LanguageCodes.English,
-//     };
-//   }
-//   next();
-// });
+// Set up Swagger documentation
+setupSwagger(app);
 
 app.use('/', (req, res) => {
   res.json({ message: 'API is running' });

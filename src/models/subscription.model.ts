@@ -38,7 +38,7 @@ export class SubscriptionEntity {
   @OneToMany(
     () => Lap,
     lap => lap.subscription,
-    { cascade: true }
+    { cascade: true, onDelete: 'CASCADE', onUpdate: 'CASCADE' }
   )
   laps?: Lap[];
 }

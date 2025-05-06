@@ -5,6 +5,9 @@ config({ path: envFile });
 
 export const env = {
   port: +(process.env.PORT || 3000) as number,
+  nodeEnv: process.env.NODE_ENV?.trim() || 'development',
+  isTest: process.env.NODE_ENV?.trim() === 'test',
+  isProduction: process.env.NODE_ENV?.trim() === 'production',
   environment: process.env.NODE_ENV?.trim() || 'development',
   frontUrl: process.env.FRONT_URL?.split(',').map((el) => el.trim()) as string[],
   apiUrl: process.env.API_URL!,
@@ -99,4 +102,9 @@ export const checkEnvVariables = () => {
   // // if (!env.aws.region) throw new Error('env:AWS_REGION must be defined');
   // // if (!env.aws.bucket) throw new Error('env:AWS_BUCKET must be defined');
   // if (!env.aws.bucketUrl) throw new Error('env:AWS_BUCKET_URL must be defined');
+
+  // Add validation for AWS keys if not already present
+  if (!process.env.AWS_ACCESS_KEY || !process.env.AWS_SECRET_KEY || !process.env.AWS_BUCKET) {
+    console.warn('Missing AWS configuration. File uploads may not work correctly.');
+  }
 };
