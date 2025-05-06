@@ -105,12 +105,6 @@ export class UserEntity {
   @CreateDateColumn({ name: 'created_at', type: 'timestamptz', default: () => 'now()' })
   createdAt?: Date;
 
-  @ManyToOne(() => UserEntity, (user) => user.invitations, { nullable: true, onDelete: 'SET NULL' })
-  @JoinColumn({ name: 'invited_by' })
-  invitedBy?: UserEntity;
-
-  @OneToMany(() => UserEntity, (user) => user.invitedBy)
-  invitations?: UserEntity[];
 
   @Column({ type: 'enum', name: 'verification_reason', enum: VerifyReason, nullable: true })
   verificationReason?: VerifyReason;

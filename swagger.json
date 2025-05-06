@@ -2,51 +2,12 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Medical Laboratory API",
-    "description": "API for managing medical laboratory operations, samples, and results",
     "version": "1.0.0",
-    "contact": {
-      "name": "API Support",
-      "email": "support@medlab.com"
-    }
+    "description": "API documentation for Medical Laboratory system (Labs & Subscriptions)"
   },
   "servers": [
     {
-      "url": "/api/v1",
-      "description": "Development server"
-    }
-  ],
-  "tags": [
-    {
-      "name": "Authentication",
-      "description": "User authentication and management"
-    },
-    {
-      "name": "Roles",
-      "description": "User role management"
-    },
-    {
-      "name": "Permissions",
-      "description": "Permission management"
-    },
-    {
-      "name": "Labs",
-      "description": "Laboratory management"
-    },
-    {
-      "name": "Subscriptions",
-      "description": "Subscription plan management"
-    },
-    {
-      "name": "Samples",
-      "description": "Medical sample management"
-    },
-    {
-      "name": "Sample Media",
-      "description": "Media attachments for samples"
-    },
-    {
-      "name": "Notifications",
-      "description": "Sample notifications"
+      "url": "/api/v1"
     }
   ],
   "components": {
@@ -58,411 +19,66 @@
       }
     },
     "schemas": {
-      "Error": {
+      "Subscription": {
         "type": "object",
         "properties": {
-          "success": {
-            "type": "boolean",
-            "example": false
-          },
-          "message": {
-            "type": "string"
-          },
-          "errors": {
-            "type": "array",
-            "items": {
-              "type": "object"
-            }
-          }
+          "subscription_id": { "type": "string" },
+          "subscription_name": { "type": "string" },
+          "subscription_price": { "type": "string" },
+          "subscription_duration": { "type": "string", "format": "date-time" }
         }
       },
-      "SignupRequest": {
-        "type": "object",
-        "required": ["name", "email", "password", "phone"],
-        "properties": {
-          "name": {
-            "type": "string",
-            "example": "John Doe"
-          },
-          "email": {
-            "type": "string",
-            "format": "email",
-            "example": "john@example.com"
-          },
-          "password": {
-            "type": "string",
-            "format": "password",
-            "example": "securePassword123"
-          },
-          "phone": {
-            "type": "string",
-            "example": "+201234567890"
-          },
-          "defLanguage": {
-            "type": "string",
-            "enum": ["en", "ar"],
-            "example": "en"
-          },
-          "fcmToken": {
-            "type": "string"
-          },
-          "country": {
-            "type": "object",
-            "properties": {
-              "code": {
-                "type": "string",
-                "example": "EG"
-              }
-            }
-          },
-          "city": {
-            "type": "string",
-            "example": "Cairo"
-          },
-          "state": {
-            "type": "string",
-            "example": "Cairo"
-          },
-          "postalCode": {
-            "type": "integer",
-            "example": 12345
-          }
-        }
-      },
-      "SigninRequest": {
-        "type": "object",
-        "required": ["email", "password"],
-        "properties": {
-          "email": {
-            "type": "string",
-            "format": "email",
-            "example": "john@example.com"
-          },
-          "password": {
-            "type": "string",
-            "format": "password",
-            "example": "securePassword123"
-          }
-        }
-      },
-      "VerifyRequest": {
-        "type": "object",
-        "required": ["email", "code"],
-        "properties": {
-          "email": {
-            "type": "string",
-            "format": "email",
-            "example": "john@example.com"
-          },
-          "code": {
-            "type": "string",
-            "example": "123456"
-          }
-        }
-      },
-      "ResendCodeRequest": {
-        "type": "object",
-        "required": ["email"],
-        "properties": {
-          "email": {
-            "type": "string",
-            "format": "email",
-            "example": "john@example.com"
-          }
-        }
-      },
-      "LabRequest": {
-        "type": "object",
-        "required": ["email", "password"],
-        "properties": {
-          "email": {
-            "type": "string",
-            "format": "email",
-            "example": "lab@example.com"
-          },
-          "password": {
-            "type": "string",
-            "format": "password",
-            "example": "securePassword123"
-          },
-          "phone": {
-            "type": "string",
-            "example": "+201234567890"
-          },
-          "address": {
-            "type": "string",
-            "example": "123 Main St, Cairo"
-          },
-          "subscription_id": {
-            "type": "string",
-            "example": "a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6"
-          }
-        }
-      },
-      "SubscriptionRequest": {
-        "type": "object",
-        "required": ["subscription_name"],
-        "properties": {
-          "subscription_name": {
-            "type": "string",
-            "example": "Premium Plan"
-          },
-          "subscription_price": {
-            "type": "string",
-            "example": "199.99"
-          },
-          "subscription_duration": {
-            "type": "string",
-            "example": "12 months"
-          }
-        }
-      },
-      "SampleRequest": {
-        "type": "object",
-        "required": ["user_name", "lap_id"],
-        "properties": {
-          "user_name": {
-            "type": "string",
-            "example": "Patient Name"
-          },
-          "user_email": {
-            "type": "string",
-            "format": "email",
-            "example": "patient@example.com"
-          },
-          "user_phone": {
-            "type": "string",
-            "example": "+201234567890"
-          },
-          "description": {
-            "type": "string",
-            "example": "Blood test for glucose levels"
-          },
-          "lap_id": {
-            "type": "string",
-            "example": "a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6"
-          }
-        }
-      },
-      "SampleUpdateRequest": {
+      "Lab": {
         "type": "object",
         "properties": {
-          "user_name": {
-            "type": "string",
-            "example": "Updated Patient Name"
-          },
-          "user_email": {
-            "type": "string",
-            "format": "email",
-            "example": "patient2@example.com"
-          },
-          "user_phone": {
-            "type": "string",
-            "example": "+201234567891"
-          },
-          "description": {
-            "type": "string",
-            "example": "Updated description"
-          },
-          "status": {
-            "type": "string",
-            "enum": ["pending", "in progress", "completed", "failed", "cancelled"],
-            "example": "in progress"
-          },
-          "result": {
-            "type": "string",
-            "example": "Normal glucose levels detected"
-          }
-        }
-      },
-      "NotificationRequest": {
-        "type": "object",
-        "required": ["sample_id", "notification_name"],
-        "properties": {
-          "sample_id": {
-            "type": "string",
-            "example": "a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6"
-          },
-          "notification_name": {
-            "type": "string",
-            "example": "Result Ready"
-          },
-          "notification_description": {
-            "type": "string",
-            "example": "Your test results are ready for review"
-          }
-        }
-      },
-      "RoleRequest": {
-        "type": "object",
-        "required": ["key", "title"],
-        "properties": {
-          "key": {
-            "type": "string",
-            "example": "technician"
-          },
-          "title": {
-            "type": "string",
-            "example": "Lab Technician"
-          },
-          "description": {
-            "type": "string",
-            "example": "Handles lab tests and samples"
-          },
-          "permissions": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "example": ["view_samples", "create_results"]
-          }
-        }
-      },
-      "RoleUpdateRequest": {
-        "type": "object",
-        "properties": {
-          "title": {
-            "type": "string",
-            "example": "Senior Lab Technician"
-          },
-          "description": {
-            "type": "string",
-            "example": "Senior role for handling lab tests"
-          },
-          "permissions": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "example": ["view_samples", "create_results", "approve_results"]
-          }
-        }
-      }
-    },
-    "responses": {
-      "Success": {
-        "description": "Successful operation",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "success": {
-                  "type": "boolean",
-                  "example": true
-                },
-                "message": {
-                  "type": "string"
-                },
-                "data": {
-                  "type": "object"
-                }
-              }
-            }
-          }
-        }
-      },
-      "Unauthorized": {
-        "description": "Authentication required",
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/Error"
-            }
-          }
-        }
-      },
-      "BadRequest": {
-        "description": "Bad request",
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/Error"
-            }
-          }
-        }
-      },
-      "NotFound": {
-        "description": "Resource not found",
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/Error"
-            }
-          }
+          "lap_id": { "type": "string" },
+          "email": { "type": "string" },
+          "phone": { "type": "string" },
+          "address": { "type": "string" },
+          "subscription": { "$ref": "#/components/schemas/Subscription" }
         }
       }
     }
   },
+  "security": [
+    { "bearerAuth": [] }
+  ],
   "paths": {
-    "/auth/signup": {
+    "/auth/lab-login": {
       "post": {
-        "tags": ["Authentication"],
-        "summary": "Register a new user",
-        "description": "Create a new user account in the system",
+        "summary": "Authenticate a laboratory (Lab Login)",
+        "tags": ["Labs"],
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/SignupRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "User created successfully",
-            "$ref": "#/components/responses/Success"
-          },
-          "400": {
-            "$ref": "#/components/responses/BadRequest"
-          }
-        }
-      }
-    },
-    "/auth/signin": {
-      "post": {
-        "tags": ["Authentication"],
-        "summary": "Authenticate user",
-        "description": "Sign in with email and password",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/SigninRequest"
+                "type": "object",
+                "required": ["email", "password"],
+                "properties": {
+                  "email": { "type": "string" },
+                  "password": { "type": "string" }
+                }
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Login successful",
+            "description": "Lab login successful",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "example": true
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Login successful"
-                    },
+                    "success": { "type": "boolean" },
+                    "message": { "type": "string" },
                     "data": {
                       "type": "object",
                       "properties": {
-                        "access_token": {
-                          "type": "string",
-                          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-                        },
-                        "refresh_token": {
-                          "type": "string",
-                          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-                        }
+                        "token": { "type": "string" },
+                        "labId": { "type": "string" },
+                        "email": { "type": "string" }
                       }
                     }
                   }
@@ -471,69 +87,56 @@
             }
           },
           "400": {
-            "$ref": "#/components/responses/BadRequest"
+            "description": "Invalid credentials"
           }
         }
       }
     },
-    "/auth/verify": {
+    "/labs/subscription": {
       "post": {
-        "tags": ["Authentication"],
-        "summary": "Verify account",
-        "description": "Verify user account with verification code",
+        "summary": "Register a new laboratory (with subscription)",
+        "tags": ["Labs"],
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/VerifyRequest"
+                "type": "object",
+                "required": ["email", "password"],
+                "properties": {
+                  "email": { "type": "string" },
+                  "password": { "type": "string" },
+                  "phone": { "type": "string" },
+                  "address": { "type": "string" },
+                  "subscription_id": { "type": "string" },
+                  "subscription": {
+                    "type": "object",
+                    "properties": {
+                      "subscription_name": { "type": "string" },
+                      "subscription_price": { "type": "string" },
+                      "subscription_duration": { "type": "string" }
+                    }
+                  }
+                }
               }
             }
           }
         },
         "responses": {
-          "200": {
-            "$ref": "#/components/responses/Success"
-          },
-          "400": {
-            "$ref": "#/components/responses/BadRequest"
-          }
-        }
-      }
-    },
-    "/auth/refresh-token": {
-      "post": {
-        "tags": ["Authentication"],
-        "summary": "Refresh authentication token",
-        "description": "Get a new access token using refresh token",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Token refreshed successfully",
+          "201": {
+            "description": "Laboratory created successfully",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "example": true
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Token generated"
-                    },
+                    "success": { "type": "boolean" },
+                    "message": { "type": "string" },
                     "data": {
                       "type": "object",
                       "properties": {
-                        "access_token": {
-                          "type": "string",
-                          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-                        }
+                        "lap_id": { "type": "string" },
+                        "subscription_id": { "type": "string" }
                       }
                     }
                   }
@@ -541,689 +144,152 @@
               }
             }
           },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          }
-        }
-      }
-    },
-    "/roles": {
-      "get": {
-        "tags": ["Roles"],
-        "summary": "Get all roles",
-        "description": "Retrieve all roles in the system",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/Success"
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          }
-        }
-      },
-      "post": {
-        "tags": ["Roles"],
-        "summary": "Create a new role",
-        "description": "Create a new role with specified permissions",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RoleRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "$ref": "#/components/responses/Success"
-          },
           "400": {
-            "$ref": "#/components/responses/BadRequest"
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          }
-        }
-      }
-    },
-    "/roles/{roleId}": {
-      "get": {
-        "tags": ["Roles"],
-        "summary": "Get a specific role",
-        "description": "Retrieve a role by ID",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "roleId",
-            "in": "path",
-            "required": true,
-            "description": "ID of the role",
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/Success"
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          }
-        }
-      },
-      "patch": {
-        "tags": ["Roles"],
-        "summary": "Update a role",
-        "description": "Update an existing role",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "roleId",
-            "in": "path",
-            "required": true,
-            "description": "ID of the role",
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RoleUpdateRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/Success"
-          },
-          "400": {
-            "$ref": "#/components/responses/BadRequest"
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          }
-        }
-      },
-      "delete": {
-        "tags": ["Roles"],
-        "summary": "Delete a role",
-        "description": "Remove a role from the system",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "roleId",
-            "in": "path",
-            "required": true,
-            "description": "ID of the role",
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/Success"
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          }
-        }
-      }
-    },
-    "/permissions": {
-      "get": {
-        "tags": ["Permissions"],
-        "summary": "Get all permissions",
-        "description": "Retrieve all permissions in the system",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/Success"
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          }
-        }
-      }
-    },
-    "/permissions/me": {
-      "get": {
-        "tags": ["Permissions"],
-        "summary": "Get logged user permissions",
-        "description": "Get permissions of the currently authenticated user",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/Success"
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
+            "description": "Subscription plan is required"
           }
         }
       }
     },
     "/labs": {
       "get": {
+        "summary": "Get all laboratories",
         "tags": ["Labs"],
-        "summary": "Get all labs",
-        "description": "Retrieve all laboratories in the system",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+        "security": [{ "bearerAuth": [] }],
         "responses": {
           "200": {
-            "$ref": "#/components/responses/Success"
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          }
-        }
-      },
-      "post": {
-        "tags": ["Labs"],
-        "summary": "Create a new lab",
-        "description": "Register a new laboratory in the system",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/LabRequest"
+            "description": "Laboratories fetched successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean" },
+                    "message": { "type": "string" },
+                    "data": {
+                      "type": "array",
+                      "items": { "$ref": "#/components/schemas/Lab" }
+                    }
+                  }
+                }
               }
             }
-          }
-        },
-        "responses": {
-          "201": {
-            "$ref": "#/components/responses/Success"
-          },
-          "400": {
-            "$ref": "#/components/responses/BadRequest"
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
           }
         }
       }
     },
     "/labs/{labId}": {
       "get": {
+        "summary": "Get a laboratory by ID",
         "tags": ["Labs"],
-        "summary": "Get a specific lab",
-        "description": "Retrieve a laboratory by ID",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+        "security": [{ "bearerAuth": [] }],
         "parameters": [
           {
             "name": "labId",
             "in": "path",
             "required": true,
-            "description": "ID of the lab",
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
+            "schema": { "type": "string" }
           }
         ],
         "responses": {
           "200": {
-            "$ref": "#/components/responses/Success"
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
+            "description": "Laboratory fetched successfully",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Lab" }
+              }
+            }
           }
         }
       },
       "patch": {
+        "summary": "Update a laboratory",
         "tags": ["Labs"],
-        "summary": "Update a lab",
-        "description": "Update an existing laboratory",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+        "security": [{ "bearerAuth": [] }],
         "parameters": [
           {
             "name": "labId",
             "in": "path",
             "required": true,
-            "description": "ID of the lab",
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
+            "schema": { "type": "string" }
           }
         ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
-                  "phone": {
-                    "type": "string",
-                    "example": "+201234567891"
-                  },
-                  "address": {
-                    "type": "string",
-                    "example": "456 Side St, Cairo"
-                  },
-                  "subscription_id": {
-                    "type": "string",
-                    "example": "a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6"
-                  }
+                  "phone": { "type": "string" },
+                  "address": { "type": "string" },
+                  "subscription_id": { "type": "string" }
                 }
               }
             }
           }
         },
         "responses": {
-          "200": {
-            "$ref": "#/components/responses/Success"
-          },
-          "400": {
-            "$ref": "#/components/responses/BadRequest"
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          }
+          "200": { "description": "Laboratory updated successfully" }
         }
       },
       "delete": {
+        "summary": "Delete a laboratory",
         "tags": ["Labs"],
-        "summary": "Delete a lab",
-        "description": "Remove a laboratory from the system",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+        "security": [{ "bearerAuth": [] }],
         "parameters": [
           {
             "name": "labId",
             "in": "path",
             "required": true,
-            "description": "ID of the lab",
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
+            "schema": { "type": "string" }
           }
         ],
         "responses": {
-          "200": {
-            "$ref": "#/components/responses/Success"
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          }
+          "200": { "description": "Laboratory deleted successfully" }
         }
       }
     },
     "/subscriptions": {
       "get": {
-        "tags": ["Subscriptions"],
         "summary": "Get all subscriptions",
-        "description": "Retrieve all subscription plans",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/Success"
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          }
-        }
-      },
-      "post": {
         "tags": ["Subscriptions"],
-        "summary": "Create a new subscription",
-        "description": "Create a new subscription plan",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/SubscriptionRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "$ref": "#/components/responses/Success"
-          },
-          "400": {
-            "$ref": "#/components/responses/BadRequest"
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          }
-        }
-      }
-    },
-    "/samples": {
-      "get": {
-        "tags": ["Samples"],
-        "summary": "Get all samples",
-        "description": "Retrieve all medical samples",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+        "security": [{ "bearerAuth": [] }],
         "responses": {
           "200": {
-            "$ref": "#/components/responses/Success"
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
+            "description": "Subscription plans fetched successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean" },
+                    "message": { "type": "string" },
+                    "data": {
+                      "type": "array",
+                      "items": { "$ref": "#/components/schemas/Subscription" }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       },
       "post": {
-        "tags": ["Samples"],
-        "summary": "Create a new sample",
-        "description": "Register a new medical sample",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+        "summary": "Create a new subscription plan",
+        "tags": ["Subscriptions"],
+        "security": [{ "bearerAuth": [] }],
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/SampleRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "$ref": "#/components/responses/Success"
-          },
-          "400": {
-            "$ref": "#/components/responses/BadRequest"
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          }
-        }
-      }
-    },
-    "/samples/{sampleId}": {
-      "get": {
-        "tags": ["Samples"],
-        "summary": "Get a specific sample",
-        "description": "Retrieve a medical sample by ID",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "sampleId",
-            "in": "path",
-            "required": true,
-            "description": "ID of the sample",
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/Success"
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          }
-        }
-      },
-      "patch": {
-        "tags": ["Samples"],
-        "summary": "Update a sample",
-        "description": "Update an existing medical sample",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "sampleId",
-            "in": "path",
-            "required": true,
-            "description": "ID of the sample",
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/SampleUpdateRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/Success"
-          },
-          "400": {
-            "$ref": "#/components/responses/BadRequest"
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          }
-        }
-      },
-      "delete": {
-        "tags": ["Samples"],
-        "summary": "Delete a sample",
-        "description": "Remove a medical sample from the system",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "sampleId",
-            "in": "path",
-            "required": true,
-            "description": "ID of the sample",
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/Success"
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          }
-        }
-      }
-    },
-    "/samples/{sampleId}/media": {
-      "get": {
-        "tags": ["Sample Media"],
-        "summary": "Get all media for a sample",
-        "description": "Retrieve all media related to a specific sample",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "sampleId",
-            "in": "path",
-            "required": true,
-            "description": "ID of the sample",
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/Success"
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          }
-        }
-      },
-      "post": {
-        "tags": ["Sample Media"],
-        "summary": "Upload media for a sample",
-        "description": "Upload one or more media files for a specific sample",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "sampleId",
-            "in": "path",
-            "required": true,
-            "description": "ID of the sample",
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "multipart/form-data": {
               "schema": {
                 "type": "object",
+                "required": ["subscription_name"],
                 "properties": {
-                  "files": {
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "format": "binary"
-                    }
-                  },
-                  "media_type": {
-                    "type": "string",
-                    "enum": ["image", "video"],
-                    "default": "image"
-                  },
-                  "media_name": {
-                    "type": "string"
-                  },
-                  "media_description": {
-                    "type": "string"
-                  }
+                  "subscription_name": { "type": "string" },
+                  "subscription_price": { "type": "string" },
+                  "subscription_duration": { "type": "string" }
                 }
               }
             }
@@ -1231,81 +297,62 @@
         },
         "responses": {
           "201": {
-            "$ref": "#/components/responses/Success"
-          },
-          "400": {
-            "$ref": "#/components/responses/BadRequest"
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          }
-        }
-      }
-    },
-    "/samples/media/{mediaId}": {
-      "delete": {
-        "tags": ["Sample Media"],
-        "summary": "Delete sample media",
-        "description": "Remove media from a sample",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "mediaId",
-            "in": "path",
-            "required": true,
-            "description": "ID of the media",
-            "schema": {
-              "type": "string",
-              "format": "uuid"
+            "description": "Subscription plan created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean" },
+                    "message": { "type": "string" },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "subscription_id": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
             }
           }
-        ],
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/Success"
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          }
         }
       }
     },
-    "/notifications": {
+    "/subscriptions/{subscriptionId}": {
       "get": {
-        "tags": ["Notifications"],
-        "summary": "Get all notifications",
-        "description": "Retrieve all sample notifications",
-        "security": [
+        "summary": "Get a subscription plan by ID",
+        "tags": ["Subscriptions"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
           {
-            "bearerAuth": []
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
           }
         ],
         "responses": {
           "200": {
-            "$ref": "#/components/responses/Success"
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
+            "description": "Subscription plan fetched successfully",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Subscription" }
+              }
+            }
           }
         }
       },
-      "post": {
-        "tags": ["Notifications"],
-        "summary": "Create a notification",
-        "description": "Create a new notification for a sample",
-        "security": [
+      "patch": {
+        "summary": "Update a subscription plan",
+        "tags": ["Subscriptions"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
           {
-            "bearerAuth": []
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
           }
         ],
         "requestBody": {
@@ -1313,91 +360,40 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NotificationRequest"
+                "type": "object",
+                "properties": {
+                  "subscription_name": { "type": "string" },
+                  "subscription_price": { "type": "string" },
+                  "subscription_duration": { "type": "string" }
+                }
               }
             }
           }
         },
         "responses": {
-          "201": {
-            "$ref": "#/components/responses/Success"
-          },
-          "400": {
-            "$ref": "#/components/responses/BadRequest"
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          }
-        }
-      }
-    },
-    "/notifications/{notificationId}": {
-      "get": {
-        "tags": ["Notifications"],
-        "summary": "Get a specific notification",
-        "description": "Retrieve a notification by ID",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "notificationId",
-            "in": "path",
-            "required": true,
-            "description": "ID of the notification",
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/Success"
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          }
+          "200": { "description": "Subscription plan updated successfully" }
         }
       },
       "delete": {
-        "tags": ["Notifications"],
-        "summary": "Delete a notification",
-        "description": "Remove a notification from the system",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+        "summary": "Delete a subscription plan",
+        "tags": ["Subscriptions"],
+        "security": [{ "bearerAuth": [] }],
         "parameters": [
           {
-            "name": "notificationId",
+            "name": "subscriptionId",
             "in": "path",
             "required": true,
-            "description": "ID of the notification",
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
+            "schema": { "type": "string" }
           }
         ],
         "responses": {
-          "200": {
-            "$ref": "#/components/responses/Success"
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          }
+          "200": { "description": "Subscription plan deleted successfully" }
         }
       }
     }
-  }
+  },
+  "tags": [
+    { "name": "Labs", "description": "Laboratory management" },
+    { "name": "Subscriptions", "description": "Subscription plan management" }
+  ]
 }

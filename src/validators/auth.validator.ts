@@ -43,3 +43,9 @@ export const changePassword = [
   body('newPassword').isString(),
   validator,
 ];
+
+export const labLogin = [
+  body('email').isEmail(),
+  body('password').isString(),
+  validator,
+];

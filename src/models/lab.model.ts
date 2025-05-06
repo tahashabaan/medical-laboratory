@@ -56,7 +56,7 @@ export class LapEntity {
 
   @ManyToOne(
     () => SubscriptionEntity,
-    { nullable: true, eager: true, onDelete: 'SET NULL', onUpdate: 'CASCADE' }
+    { nullable: false, eager: true, onDelete: 'SET NULL', onUpdate: 'CASCADE' }
   )
   @JoinColumn({ name: 'subscription_id' })
   subscription?: SubscriptionEntity;

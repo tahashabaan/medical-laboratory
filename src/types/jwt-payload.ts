@@ -2,10 +2,14 @@ import { LanguageCodes } from '../constants/languages';
 
 export interface IjwtPayload {
   id?: string;
-  isGuest: boolean;
+  email?: string;
+  phone?: string;
+  name?: string;  
+  isGuest?: boolean;
   isVerified?: boolean;
   profileId?: string;
-  roleId: string;
-  permissions: string[];
-  language: LanguageCodes;
+  roleId?: string;
+  permissions?: string[];
+  language?: LanguageCodes;
+  isLab?: boolean;
 }

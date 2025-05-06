@@ -14,11 +14,11 @@ router.use('/roles', roleRoutes);
 router.use('/permissions', permissionRoutes);
 router.use('/labs', labRoutes);
 router.use('/subscriptions', subscriptionRoutes);
-router.use('/samples', sampleRoutes);
-router.use('/notifications', notificationRoutes);
+// router.use('/samples', sampleRoutes);
+// router.use('/notifications', notificationRoutes);
 
 router.use('/', (req, res) => {
-  res.json({ message: 'This is a basic route' });
+  res.json({ message: 'api/v1 runnuing' });
 });
 
 // Example of another new route

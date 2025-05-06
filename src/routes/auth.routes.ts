@@ -4,6 +4,8 @@ import * as validators from '../validators/auth.validator';
 import { isauthenticated } from '../guards/isauthenticated.guard';
 import { isauthorized } from '../guards/isauthorized.guard';
 import { PERMISSIONS } from '../constants/permissions';
+import { labLoginHandler } from '../controllers/auth/lab-login.controller';
+import { authenticateLap } from '../middlewares/authenticate-lap.middleware';
 
 const router = Router();
 
@@ -29,5 +31,6 @@ router
   .route('/forget-password')
   .post(validators.askForgetPassword, handlers.askForgetPasswordHandler)
   .patch(validators.updateForgottenPassword, handlers.updateForgetenPasswordHandler);
+router.post('/lab-login', validators.labLogin, authenticateLap, handlers.labLoginHandler);
 
 export const authRoutes = router;

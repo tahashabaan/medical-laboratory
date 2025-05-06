@@ -30,6 +30,7 @@ export enum ERR_CODES {
   RATING_NOT_FOUND = 'RATING_NOT_FOUND',
   RATING_ALREADY_EXISTS = 'RATING_ALREADY_EXISTS',
   POINT_NOT_FOUND = 'POINT_NOT_FOUND',
+  SUBSCRIPTION_REQUIRED = 'SUBSCRIPTION_REQUIRED',
 }
 
 export const ErrCodes: { [key in ERR_CODES]: Record<string, string> } = {
@@ -133,20 +134,24 @@ export const ErrCodes: { [key in ERR_CODES]: Record<string, string> } = {
     [LanguageCodes.English]: 'Validation Error',
     [LanguageCodes.Arabic]: 'خطأ في التحقق',
   },
-  PRODUCT_NOT_FOUND:{
+  PRODUCT_NOT_FOUND: {
     [LanguageCodes.English]: 'Product Not Found',
-    [LanguageCodes.Arabic]: 'المنتج غير موجود'
+    [LanguageCodes.Arabic]: 'المنتج غير موجود',
   },
-  RATING_NOT_FOUND:{
+  RATING_NOT_FOUND: {
     [LanguageCodes.English]: 'Rating Not Found',
-    [LanguageCodes.Arabic]: 'التقييم غير موجود'
+    [LanguageCodes.Arabic]: 'التقييم غير موجود',
   },
-  RATING_ALREADY_EXISTS:{
+  RATING_ALREADY_EXISTS: {
     [LanguageCodes.English]: 'Rating Already Exists',
-    [LanguageCodes.Arabic]: 'التقييم موجود بالفعل'
+    [LanguageCodes.Arabic]: 'التقييم موجود بالفعل',
   },
-  POINT_NOT_FOUND:{
+  POINT_NOT_FOUND: {
     [LanguageCodes.English]: 'Point Not Found',
-    [LanguageCodes.Arabic]: 'النقاط غير موجودة'
-  }
+    [LanguageCodes.Arabic]: 'النقاط غير موجودة',
+  },
+  SUBSCRIPTION_REQUIRED: {
+    [LanguageCodes.English]: 'Subscription plan is required. Please select or create a subscription.',
+    [LanguageCodes.Arabic]: 'يجب اختيار أو إنشاء خطة اشتراك.',
+  },
 };

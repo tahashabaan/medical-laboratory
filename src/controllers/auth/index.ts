@@ -1,3 +1,4 @@
+export * from './lab-login.controller';
 export * from './change-email.controller';
 export * from './change-password.controller';
 export * from './forget-password.controller';
