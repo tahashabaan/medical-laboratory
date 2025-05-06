@@ -24,7 +24,7 @@ export class PatientEntity {
   email?: string;
 
   @Column({ type: 'varchar', nullable: false })
-  phone!: string;
+  phone?: string;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamptz', default: () => 'now()' })
   createdAt?: Date;

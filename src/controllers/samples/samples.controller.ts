@@ -64,7 +64,7 @@ export const updateSampleHandler: RequestHandler<
     user_phone?: string;
     description?: string;
     status?: 'pending' | 'in progress' | 'completed' | 'failed' | 'cancelled';
-    result?: string;
+    result?: Number;
   }
 > = async (req, res, next) => {
   await Models.Sample.update(
@@ -75,7 +75,7 @@ export const updateSampleHandler: RequestHandler<
       // user_phone: req.body.user_phone,
       description: req.body.description,
       status: req.body.status,
-      result: req.body.result,
+      result: +req.body.result,
     }
   );
 

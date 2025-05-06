@@ -21,8 +21,8 @@ export class SubscriptionEntity {
   @Column({ type: 'varchar', nullable: true })
   subscription_price?: string;
 
-  @Column({ type: 'varchar', nullable: true })
-  subscription_duration?: string;
+  @Column({ type: 'timestamptz', nullable: true })
+  subscription_duration?: Date;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamptz', default: () => 'now()' })
   createdAt?: Date;

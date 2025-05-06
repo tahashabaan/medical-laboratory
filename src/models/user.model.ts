@@ -16,6 +16,7 @@ import { MODEL_NAMES } from '../constants/model-names';
 import { RoleEntity } from './role.model';
 // import { CountryEntity } from './country.model';
 import { VerifyReason } from '../constants/verify-reason';
+import { LapEntity } from './lab.model';
 
 // create table with name profile
 @Entity({ name: MODEL_NAMES.profile })
@@ -71,14 +72,11 @@ export class UserEntity {
   @Column({ type: 'varchar', nullable: true })
   verificationCode?: string;
 
-  @Column({ type: 'varchar', name: 'def_language', default: 'en' })
-  defLanguage!: string;
+  @Column({ type: 'varchar', name: 'def_language', nullable: true, default: 'en' })
+  defLanguage?: string;
 
   @Column({ type: 'timestamptz', name: 'verification_expire_at', nullable: true })
   verificationExpireAt?: Date;
-
-  @Column({ type: 'enum', name: 'verification_reason', enum: VerifyReason, nullable: true })
-  verificationReason?: VerifyReason;
 
   @Column({ type: 'varchar', name: 'verification_temp_email', nullable: true })
   verificationTempEmail?: string;
@@ -96,12 +94,13 @@ export class UserEntity {
   @JoinColumn({ name: 'role_id' })
   role!: RoleEntity;
 
+  @ManyToOne(() => LapEntity, { nullable: true, onDelete: 'SET NULL', onUpdate: 'CASCADE' })
+  @JoinColumn({ name: 'lab_id' })
+  lab!: LapEntity;
+
   @OneToOne(() => ProfileEntity, { cascade: true, eager: true })
   @JoinColumn({ name: 'profile_id' })
   profile?: ProfileEntity;
-
-  // @OneToMany(() => PointHistoryEntity, (pointHistory) => pointHistory.user)
-  // pointHistory!: PointHistoryEntity[];
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamptz', default: () => 'now()' })
   createdAt?: Date;
@@ -113,7 +112,6 @@ export class UserEntity {
   @OneToMany(() => UserEntity, (user) => user.invitedBy)
   invitations?: UserEntity[];
 
-  // @ManyToOne(() => CountryEntity, (country) => country.code)
-  // @JoinColumn({ name: 'country_code', referencedColumnName: 'code' })
-  // country?: CountryEntity;
+  @Column({ type: 'enum', name: 'verification_reason', enum: VerifyReason, nullable: true })
+  verificationReason?: VerifyReason;
 }
