@@ -24,9 +24,9 @@ app.use(express.static('uploads/images'));
 // Set up Swagger documentation
 setupSwagger(app);
 
-app.use('/', (req, res) => {
-  res.json({ message: 'API is running' });
-});
+// app.use('/', (req, res) => {
+//   res.json({ message: 'API is running' });
+// });
 
 app.use('/api/v1', apiRoutes);
 app.use('*', Middlewares.routeNotFound);

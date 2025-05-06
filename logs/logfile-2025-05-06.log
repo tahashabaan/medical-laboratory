@@ -1,0 +1,22 @@
+2025-05-06T17:46:37.725Z [ERROR]: getaddrinfo ENOTFOUND ep-calm-wind-abcs1p07-pooler.eu-west-2.aws.neon.tech
+Error: getaddrinfo ENOTFOUND ep-calm-wind-abcs1p07-pooler.eu-west-2.aws.neon.tech
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26)
+2025-05-06T17:49:26.464Z [ERROR]: Error during Data Source initialization:
+AggregateError: 
+    at internalConnectMultiple (node:net:1122:18)
+    at afterConnectMultiple (node:net:1689:7)
+2025-05-06T18:04:20.626Z [ERROR]: Error during Data Source initialization: getaddrinfo ENOTFOUND ep-calm-wind-abcs1p07-pooler.eu-west-2.aws.neon.tech
+Error: getaddrinfo ENOTFOUND ep-calm-wind-abcs1p07-pooler.eu-west-2.aws.neon.tech
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26)
+2025-05-06T18:04:25.375Z [ERROR]: No metadata for "LapEntity" was found.
+EntityMetadataNotFoundError: No metadata for "LapEntity" was found.
+    at DataSource.getMetadata (D:\taha\graduation_project\src\data-source\DataSource.ts:450:30)
+    at Repository.get metadata [as metadata] (D:\taha\graduation_project\src\repository\Repository.ts:53:40)
+    at Repository.findOne (D:\taha\graduation_project\src\repository\Repository.ts:597:42)
+    at D:\taha\graduation_project\src\middlewares\authenticate-lap.middleware.ts:9:32
+    at Generator.next (<anonymous>)
+    at D:\taha\graduation_project\src\middlewares\authenticate-lap.middleware.ts:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (D:\taha\graduation_project\src\middlewares\authenticate-lap.middleware.ts:4:12)
+    at authenticateLap (D:\taha\graduation_project\src\middlewares\authenticate-lap.middleware.ts:7:73)
+    at newFn (D:\taha\graduation_project\node_modules\express-async-errors\index.js:16:20)

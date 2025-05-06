@@ -9,7 +9,9 @@ const start = async () => {
   await initializeDB();
   app.listen(env.port, () => {
     console.log(`server is running on port ${env.port} in envronment ${env.environment}`);
-    console.log(`local url: http://localhost:${env.port}`);
+    console.log(`local url: http://localhost:${env.port}/api-docs`);
+
+    console.log('Server is ready to accept requests');
   });
 };
 
